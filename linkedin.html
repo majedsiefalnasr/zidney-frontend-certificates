@@ -1,0 +1,98 @@
+<!-- @format -->
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Certificate Generator</title>
+		<link rel="stylesheet" href="css/style.css" />
+		<link rel="icon" type="image/x-icon" href="./img/fav.png" />
+
+		<!-- Font -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+			rel="stylesheet" />
+
+		<!-- Include html2canvas and jsPDF libraries -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
+		<!-- Generator helper -->
+		<script src="./js/certificate-generator.js"></script>
+	</head>
+
+	<body>
+		<div class="container">
+			<div id="certificate"></div>
+
+			<div id="buttons">
+				<button onclick="saveAsPDF()">Save as PDF</button>
+			</div>
+
+			<!-- Canvas element where HTML content will be rendered -->
+			<canvas id="canvasOutput" style="display: none"></canvas>
+		</div>
+
+		<script>
+			var config = {
+				brand: {
+					name: "Zidny Solutions Egypt",
+					logo: "./img/zidny.logo.png",
+				},
+				template: {
+					theme: "4",
+					orientation: "v", // Direction v for vertical or h for horizontal
+					color: "#f1e7df", // Style color any supported HTML color
+					background: "./img/background/v/ex-2.png", // Background - URL to image - only available with template theme 4
+					side_image: "./img/side/v/ex-1.png", // Side image
+					badge_image: "./img/badge/exam.png", // Badge image
+				},
+				language: "ar", // Language
+				direction: "rtl", // Language
+				type: "exam", // Badge type exam or learning-path
+			};
+
+			var data = {
+				course: {
+					name: "MySQL Installation and Certification",
+					description:
+						"By continuing to learn, you have expanded your perspective, sharpened your skills, and made yourself even more in demand.",
+					date: "Sep 25, 2024",
+					duration: "2 hour 41 minutes",
+				},
+				authority: {
+					sign_image: "./img/sign.png",
+					name: "VP, Learning Content at LinkedIn",
+				},
+				certificate: {
+					name: "Majed Sief Alnasr",
+					id: "AU3IZ5a5rPeUmO_IE8R80L3ac5sN",
+				},
+			};
+
+			var data_ar = {
+				course: {
+					name: "مقدمة فى البرمجة اللغوية",
+					description:
+						"من خلال الاستمرار في التعلم، قمت بتوسيع منظورك، وصقل مهاراتك، وجعلت نفسك أكثر طلبًا.",
+					date: "سبتمبر 25, 2024",
+					duration: "ساعتان و41 دقيقة",
+				},
+				authority: {
+					sign_image: "./img/sign.png",
+					name: "نائب الرئيس للمحتوى التعليمي في LinkedIn",
+				},
+				certificate: {
+					name: "ماجد سيف النصر",
+					id: "AU3IZ5a5rPeUmO_IE8R80L3ac5sN",
+				},
+			};
+
+			generateCertification(config, data_ar);
+		</script>
+	</body>
+</html>
