@@ -161,7 +161,7 @@
   padding-block: var(--padding-y, 200px);
 }
 #certificate > .content > .data-form {
-  flex: 1 1 auto;
+  /* flex: 1 1 auto; */
   margin: auto;
   padding: 0px;
 
@@ -176,6 +176,9 @@
   height: 100%;
 
   display: flex;
+}
+#certificate[data-theme*='ithSideImage'] > .content {
+  gap: 40px;
 }
 
 /* Certificate styles */
@@ -228,6 +231,9 @@
 }
 
 /* With side image */
+#certificate[data-orientation='portrait'] > .content {
+  flex-direction: column;
+}
 #certificate[data-theme*='ithSideImage']:not([data-theme*='border']) {
   --padding-x: 40px;
   --padding-y: 40px;
@@ -236,19 +242,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 1 0 100%;
+  flex: 1 0 auto;
   max-width: 35%;
   overflow: clip;
 
   /* Image position */
   order: var(--side-position, 0);
 }
+#certificate[data-theme*='ithSideImage'][data-orientation='portrait']
+  > .content
+  > .side {
+  max-width: unset;
+  max-height: 25%;
+}
 #certificate[data-theme*='ithSideImage']:not([data-theme*='border'])
   > .content
   > .side {
-  margin-block: -40px;
+  margin: -40px;
 }
 #certificate[data-theme*='ithSideImage'] > .content > .side img {
+  width: 100%;
   height: 100%;
   object-fit: cover;
 }

@@ -148,27 +148,56 @@ function getImageData(inputFile, type) {
 async function renderToCanvas(target, canvas) {
   // Ensure the target element is visible for capturing
   target.style.display = 'block';
+
   // Ensure the output canvas is not visible
   canvas.style.display = 'none';
 
-  // Capture the HTML content as a canvas
-  await html2canvas(target, { scale: 2 }).then((capturedCanvas) => {
-    // Set the output canvas size to match the captured canvas
-    canvas.width = capturedCanvas.width;
-    canvas.height = capturedCanvas.height;
-    const ctx = canvas.getContext('2d');
+  // Set the scale factor
+  const scale = 2;
 
-    // Draw captured content onto the output canvas
-    ctx.drawImage(capturedCanvas, 0, 0);
+  // Adjust width and height based on scale
+  const width = target.offsetWidth * scale;
+  const height = target.offsetHeight * scale;
 
-    console.log('Rendered HTML content to canvas.');
-  });
+  // Convert the target HTML element to an image using dom-to-image with scale
+  await domtoimage
+    .toPng(target, {
+      width: width,
+      height: height,
+      style: {
+        transform: `scale(${scale})`,
+        transformOrigin: 'top left',
+        width: `${target.offsetWidth}px`,
+        height: `${target.offsetHeight}px`,
+      },
+    })
+    .then((dataUrl) => {
+      // Create a new image element
+      const img = new Image();
+      img.src = dataUrl;
 
-  // Hide the target element after rendering
-  target.style.display = 'none';
+      // Wait for the image to load
+      img.onload = () => {
+        // Set canvas size to match the scaled image
+        canvas.width = img.width;
+        canvas.height = img.height;
 
-  // Display the output canvas
-  canvas.style.display = 'block';
+        // Get the canvas context and draw the image onto the canvas
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+
+        console.log('Rendered HTML content to canvas.');
+
+        // Hide the target element after rendering
+        target.style.display = 'none';
+
+        // Display the output canvas
+        canvas.style.display = 'block';
+      };
+    })
+    .catch((error) => {
+      console.error('Error converting HTML to image:', error);
+    });
 }
 
 /**
