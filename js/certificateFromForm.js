@@ -9,6 +9,9 @@ import { renderToCanvas } from './utilities.js';
  * @param {HTMLCanvasElement} canvas - The canvas element where the HTML content will be rendered.
  */
 async function certificateFromForm(certificateContainer, canvas) {
+  // Validate form input and apply settings to certificate container
+  if (!formValidate()) return;
+
   setCertificateType(certificateContainer);
   setCertificateLanguage();
   setOrientation(certificateContainer);
@@ -25,6 +28,55 @@ async function certificateFromForm(certificateContainer, canvas) {
 
   // Enable Export to save configuration
   document.querySelector('#certificateExport > button').disabled = false;
+
+  // Scroll to certificate preview
+  document.querySelector('.certificate-preview').scrollIntoView({
+    behavior: 'smooth',
+  });
+}
+
+/**
+ * Validates form input based on the selected theme and checks for required image file inputs.
+ *
+ * @returns {boolean} Returns true if validation passes; false if any required image input is missing.
+ */
+function formValidate() {
+  const themeInput = document.getElementById('generator_theme');
+
+  // Validate side image if theme requires it
+  if (
+    themeInput.value === 'borderWithSideImage' ||
+    themeInput.value === 'withSideImage'
+  ) {
+    const sideImageInput = document.getElementById('generator_sideImage');
+
+    // Ensure a file is selected in the side image input
+    if (!sideImageInput.files.length) {
+      sideImageInput.classList.add('is-invalid'); // Highlight as invalid
+      sideImageInput.focus();
+      return false; // Validation failed
+    } else {
+      sideImageInput.classList.remove('is-invalid'); // Clear invalid style
+    }
+  }
+
+  // Validate background image if theme requires it
+  if (themeInput.value === 'withBackgroundImage') {
+    const backgroundImageInput = document.getElementById(
+      'generator_backgroundImage'
+    );
+
+    // Ensure a file is selected in the background image input
+    if (!backgroundImageInput.files.length) {
+      backgroundImageInput.classList.add('is-invalid'); // Highlight as invalid
+      backgroundImageInput.focus();
+      return false; // Validation failed
+    } else {
+      backgroundImageInput.classList.remove('is-invalid'); // Clear invalid style
+    }
+  }
+
+  return true; // Validation passed
 }
 
 /**
