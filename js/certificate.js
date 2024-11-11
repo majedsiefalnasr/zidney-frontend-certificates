@@ -19,11 +19,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
       // Generates a certificate based on form input settings
       await certificateFromForm(certificateContainer, certificatePreview);
-
-      // Scroll to certificate preview
-      document.querySelector('.certificate-preview').scrollIntoView({
-        behavior: 'smooth',
-      });
     });
 
   // Export the certificate as a JSON data file
