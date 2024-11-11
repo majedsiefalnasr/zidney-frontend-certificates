@@ -238,6 +238,7 @@
   align-items: center;
   flex: 1 0 100%;
   max-width: 35%;
+  overflow: clip;
 
   /* Image position */
   order: var(--side-position, 0);
