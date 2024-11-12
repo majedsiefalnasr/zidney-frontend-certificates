@@ -164,6 +164,7 @@
 #certificate > .content > .data-form {
   margin-block: auto;
   padding: 0px;
+  width: 100%;
 
   /* Required for Quilljs editor */
   height: unset;
