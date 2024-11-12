@@ -13,6 +13,7 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet"
+      crossorigin="anonymous"
     />
 
     <!-- Bootstrap -->
@@ -29,23 +30,32 @@
     ></script>
 
     <!-- Include html2canvas and jsPDF libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/dom-to-image@2.6.0/dist/dom-to-image.min.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"
+      crossorigin="anonymous"
+    ></script>
 
     <!-- Quill Rich Text Editor -->
     <link
       href="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.snow.min.css"
       rel="stylesheet"
+      crossorigin="anonymous"
     />
     <script
       defer
       src="https://cdn.bootcdn.net/ajax/libs/quill/1.3.7/quill.min.js"
+      crossorigin="anonymous"
     ></script>
 
     <!-- Quill Image Resize Module -->
     <script
       defer
       src="https://unpkg.com/quill-resize-image@1.0.5/dist/quill-resize-image.min.js"
+      crossorigin="anonymous"
     ></script>
 
     <!-- Generator style -->
@@ -285,7 +295,7 @@
             <!-- Canvas element where HTML content will be rendered -->
             <canvas id="canvasPreview" style="display: none"></canvas>
 
-            <div id="certificate">
+            <div id="certificate" class="ql-snow">
               <div class="content">
                 <!-- Side Image -->
                 <div class="side">
