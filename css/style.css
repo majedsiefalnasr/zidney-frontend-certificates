@@ -162,8 +162,7 @@
   padding-block: var(--padding-y, 200px);
 }
 #certificate > .content > .data-form {
-  /* flex: 1 1 auto; */
-  margin: auto;
+  margin-block: auto;
   padding: 0px;
 
   /* Required for Quilljs editor */
@@ -222,7 +221,7 @@
   border: 6px solid var(--border-accent-color, #b1b1b1be);
 }
 #certificate[data-theme*='border'] > .content > .data-form {
-  padding: 40px;
+  padding: 60px;
 }
 
 /* With side image */
