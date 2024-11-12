@@ -91,6 +91,10 @@
   min-height: 160px;
   padding: 40px;
 }
+.ql-editor,
+.ql-editor * {
+  line-height: 1.42;
+}
 
 /* Certificate Settings */
 #customThemeSettings[data-theme] > * {
