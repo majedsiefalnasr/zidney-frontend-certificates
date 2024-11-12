@@ -180,11 +180,19 @@
                 <label for="generator_sideImage" class="form-label"
                   >Side Image</label
                 >
+                <div id="generator_sideImagePreview">
+                  <button
+                    type="button"
+                    class="btn-close"
+                    aria-label="Clear"
+                  ></button>
+                  <img />
+                </div>
                 <input
                   class="form-control"
                   type="file"
                   id="generator_sideImage"
-                  accept="image/png"
+                  accept="image/*"
                 />
                 <div class="invalid-feedback">
                   Please add a Side Image to proceed with generating the
@@ -198,6 +206,14 @@
               <label for="generator_backgroundImage" class="form-label"
                 >Background Image</label
               >
+              <div id="generator_backgroundImagePreview">
+                <button
+                  type="button"
+                  class="btn-close"
+                  aria-label="Clear"
+                ></button>
+                <img />
+              </div>
               <input
                 class="form-control"
                 type="file"

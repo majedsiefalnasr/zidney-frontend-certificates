@@ -108,6 +108,34 @@
   #withBackgroundColor {
   display: block;
 }
+#generator_sideImagePreview,
+#generator_backgroundImagePreview {
+  position: relative;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  height: 160px;
+  border-radius: 20px;
+  background-color: #f7f7f7;
+  padding: 20px;
+  margin-block-end: 12px;
+}
+#generator_sideImagePreview.active,
+#generator_backgroundImagePreview.active {
+  display: flex;
+}
+#generator_sideImagePreview img,
+#generator_backgroundImagePreview img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+#generator_sideImagePreview .btn-close,
+#generator_backgroundImagePreview .btn-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
 
 /* Certificate content */
 .certificate-preview {
