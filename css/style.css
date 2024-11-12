@@ -127,6 +127,9 @@
   --padding-x: 200px;
   --padding-y: 100px;
 
+  /* Scaling with font size */
+  font-size: 16px;
+
   /* Hide container until certificate is generated */
   display: none;
 
