@@ -12,15 +12,51 @@ async function certificateFromForm(certificateContainer, canvas) {
   // Validate form input and apply settings to certificate container
   if (!formValidate()) return;
 
+  // Clear any previous certificate settings
+  clearCertificateType(certificateContainer);
+  clearCertificateLanguage();
+  clearOrientation(certificateContainer);
+  clearTheme(certificateContainer);
+  clearBorderColor(certificateContainer);
+  clearSideImage(certificateContainer);
+  clearSideImagePosition(certificateContainer);
+  clearBackgroundColor(certificateContainer);
+  clearBackgroundImage(certificateContainer);
+  clearCertificateContent();
+
   setCertificateType(certificateContainer);
   setCertificateLanguage();
   setOrientation(certificateContainer);
   setTheme(certificateContainer);
-  setBackgroundColor(certificateContainer);
-  setBorderColor(certificateContainer);
-  await setSideImage(certificateContainer);
-  setSideImagePosition(certificateContainer);
-  await setBackgroundImage(certificateContainer);
+
+  const themeInput = document.getElementById('generator_theme');
+  // Apply border if specified
+  if (
+    themeInput.value === 'borderWithSideImage' ||
+    themeInput.value === 'borderWithoutSideImage'
+  ) {
+    setBorderColor(certificateContainer);
+  }
+
+  // Apply side image if specified
+  if (
+    themeInput.value === 'borderWithSideImage' ||
+    themeInput.value === 'withSideImage'
+  ) {
+    await setSideImage(certificateContainer);
+    setSideImagePosition(certificateContainer);
+  }
+
+  // Apply background color if specified
+  if (themeInput.value !== 'withBackgroundImage') {
+    setBackgroundColor(certificateContainer);
+  }
+
+  // Apply background image if specified
+  if (themeInput.value === 'withBackgroundImage') {
+    await setBackgroundImage(certificateContainer);
+  }
+
   setCertificateContent();
 
   // Renders the certificate to the canvas
@@ -91,11 +127,28 @@ function setCertificateType(certificateContainer) {
 }
 
 /**
+ * Clears the certificate type from the DOM element and sessionStorage.
+ *
+ * @param {HTMLElement} certificateContainer - The certificate container element.
+ */
+function clearCertificateType(certificateContainer) {
+  certificateContainer.removeAttribute('data-type');
+  sessionStorage.removeItem('certificateType');
+}
+
+/**
  * Sets the certificate language from the form input and stores it in sessionStorage.
  */
 function setCertificateLanguage() {
   const languageInput = document.getElementById('generator_language').value;
   sessionStorage.setItem('certificateLanguage', languageInput);
+}
+
+/**
+ * Clears the certificate language from sessionStorage.
+ */
+function clearCertificateLanguage() {
+  sessionStorage.removeItem('certificateLanguage');
 }
 
 /**
@@ -109,6 +162,16 @@ function setOrientation(certificateContainer) {
   ).value;
   certificateContainer.setAttribute('data-orientation', orientationInput);
   sessionStorage.setItem('certificateOrientation', orientationInput);
+}
+
+/**
+ * Clears the certificate orientation from the DOM element and sessionStorage.
+ *
+ * @param {HTMLElement} certificateContainer - The certificate container element.
+ */
+function clearOrientation(certificateContainer) {
+  certificateContainer.removeAttribute('data-orientation');
+  sessionStorage.removeItem('certificateOrientation');
 }
 
 /**
@@ -126,6 +189,20 @@ function setTheme(certificateContainer) {
 }
 
 /**
+ * Clears the certificate theme from the DOM element and sessionStorage.
+ *
+ * @param {HTMLElement} certificateContainer - The certificate container element.
+ */
+function clearTheme(certificateContainer) {
+  certificateContainer.removeAttribute('data-theme');
+  const customThemeSettings = document.getElementById('customThemeSettings');
+  if (customThemeSettings) {
+    customThemeSettings.removeAttribute('data-theme');
+  }
+  sessionStorage.removeItem('certificateTheme');
+}
+
+/**
  * Sets the background color of the certificate based on the form input, applies it to the DOM element, and stores it in sessionStorage.
  *
  * @param {HTMLElement} certificateContainer - The certificate container element.
@@ -136,6 +213,16 @@ function setBackgroundColor(certificateContainer) {
   ).value;
   certificateContainer.style.setProperty('--background-color', backgroundColor);
   sessionStorage.setItem('certificateBackgroundColor', backgroundColor);
+}
+
+/**
+ * Clears the background color of the certificate from the DOM element and sessionStorage.
+ *
+ * @param {HTMLElement} certificateContainer - The certificate container element.
+ */
+function clearBackgroundColor(certificateContainer) {
+  certificateContainer.style.removeProperty('--background-color');
+  sessionStorage.removeItem('certificateBackgroundColor');
 }
 
 /**
@@ -155,6 +242,21 @@ function setBorderColor(certificateContainer) {
 }
 
 /**
+ * Clears the border color and accent color of the certificate, removes them from the DOM element, and clears them from sessionStorage.
+ *
+ * @param {HTMLElement} certificateContainer - The certificate container element.
+ */
+function clearBorderColor(certificateContainer) {
+  // Remove custom border color properties from the certificate container
+  certificateContainer.style.removeProperty('--border-color');
+  certificateContainer.style.removeProperty('--border-accent-color');
+
+  // Remove stored border color values from sessionStorage
+  sessionStorage.removeItem('certificateBorderColor');
+  sessionStorage.removeItem('certificateBorderAccentColor');
+}
+
+/**
  * Sets the side image of the certificate by fetching the image data from the form input.
  * Updates the DOM element and stores the image data in sessionStorage.
  *
@@ -164,7 +266,9 @@ async function setSideImage(certificateContainer) {
   const sideImageInput = document.getElementById('generator_sideImage');
   try {
     const imageUrl = await getImageData(sideImageInput, 'URL');
-    certificateContainer.querySelector('.content > .side img').src = imageUrl;
+    const image = document.createElement('img');
+    image.src = imageUrl;
+    certificateContainer.querySelector('.content >.side').appendChild(image);
   } catch (error) {
     console.error(error);
   }
@@ -179,6 +283,26 @@ async function setSideImage(certificateContainer) {
 }
 
 /**
+ * Clears the side image of the certificate from the DOM element and removes the image data from sessionStorage.
+ *
+ * @param {HTMLElement} certificateContainer - The certificate container element.
+ */
+function clearSideImage(certificateContainer) {
+  // Remove the image element from the certificate container
+  const sideImageContainer =
+    certificateContainer.querySelector('.content > .side');
+  if (sideImageContainer) {
+    const image = sideImageContainer.querySelector('img');
+    if (image) {
+      sideImageContainer.removeChild(image);
+    }
+  }
+
+  // Remove the stored side image data from sessionStorage
+  sessionStorage.removeItem('certificateSideImage');
+}
+
+/**
  * Sets the side image position for the certificate, applies it to the DOM element, and stores it in sessionStorage.
  *
  * @param {HTMLElement} certificateContainer - The certificate container element.
@@ -190,6 +314,19 @@ function setSideImagePosition(certificateContainer) {
     'certificateSideImagePosition',
     position === '0' ? 'left' : 'right'
   );
+}
+
+/**
+ * Clears the side image position for the certificate, removes it from the DOM element, and clears it from sessionStorage.
+ *
+ * @param {HTMLElement} certificateContainer - The certificate container element.
+ */
+function clearSideImagePosition(certificateContainer) {
+  // Remove custom side position property from the certificate container
+  certificateContainer.style.removeProperty('--side-position');
+
+  // Remove stored side image position from sessionStorage
+  sessionStorage.removeItem('certificateSideImagePosition');
 }
 
 /**
@@ -222,6 +359,19 @@ async function setBackgroundImage(certificateContainer) {
 }
 
 /**
+ * Clears the background image of the certificate from the DOM element and sessionStorage.
+ *
+ * @param {HTMLElement} certificateContainer - The certificate container element.
+ */
+function clearBackgroundImage(certificateContainer) {
+  // Remove the background image property from the certificate container
+  certificateContainer.style.removeProperty('--background-image');
+
+  // Remove the stored background image data from sessionStorage
+  sessionStorage.removeItem('certificateBackgroundImage');
+}
+
+/**
  * Sets the certificate content from the Quill editor to the certificate container.
  */
 function setCertificateContent() {
@@ -231,6 +381,17 @@ function setCertificateContent() {
     'certificateContent',
     JSON.stringify(document.getElementById('quillEditor').quill.getContents())
   );
+}
+
+/**
+ * Clears the certificate content from the certificate container and sessionStorage.
+ */
+function clearCertificateContent() {
+  // Clear the certificate content in the DOM element
+  document.querySelector('#certificate > .content > .data-form').innerHTML = '';
+
+  // Clear the stored certificate content from sessionStorage
+  sessionStorage.removeItem('certificateContent');
 }
 
 export { certificateFromForm };
