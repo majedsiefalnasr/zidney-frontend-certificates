@@ -127,9 +127,6 @@
   --padding-x: 200px;
   --padding-y: 100px;
 
-  /* Scaling with font size */
-  font-size: 16px;
-
   /* Hide container until certificate is generated */
   display: none;
 
@@ -147,7 +144,8 @@
 
   /* Make sure it is like Quilljs editor */
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  /* Scaling with font size */
+  font-size: 16px;
 
   background-color: var(--background-color, #ffffff);
 }
@@ -179,9 +177,6 @@
   height: 100%;
 
   display: flex;
-}
-#certificate[data-theme*='ithSideImage'] > .content {
-  gap: 40px;
 }
 
 /* Certificate styles */
@@ -229,13 +224,17 @@
 #certificate[data-theme*='border'] > .content > .data-form {
   padding: 40px;
 }
-#certificate[data-theme*='borderWithSideImage'] > .content > .data-form {
-  padding-inline: 0;
-}
 
 /* With side image */
 #certificate[data-orientation='portrait'] > .content {
   flex-direction: column;
+}
+#certificate[data-theme*='ithSideImage']:not([data-theme*='border'])
+  > .content {
+  gap: 80px;
+}
+#certificate[data-theme*='ithSideImage'] > .content > .data-form {
+  max-width: 65%;
 }
 #certificate[data-theme*='ithSideImage']:not([data-theme*='border']) {
   --padding-x: 40px;
@@ -252,6 +251,17 @@
   /* Image position */
   order: var(--side-position, 0);
 }
+#certificate[data-theme*='ithSideImage'] > .content > .side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#certificate[data-theme*='ithSideImage'][data-orientation='portrait']
+  > .content
+  > .data-form {
+  max-width: unset;
+  max-height: 75%;
+}
 #certificate[data-theme*='ithSideImage'][data-orientation='portrait']
   > .content
   > .side {
@@ -262,9 +272,4 @@
   > .content
   > .side {
   margin: -40px;
-}
-#certificate[data-theme*='ithSideImage'] > .content > .side img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
