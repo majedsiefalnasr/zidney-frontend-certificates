@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
   const defaultData = await getJSONData('./data/default_certificate.json');
 
   // Initialize the certificate default settings and data
-  certificateTemplate(defaultData);
+  defaultData && certificateTemplate(defaultData);
 
   // Apply template action button
   document

@@ -95,6 +95,10 @@
 .ql-editor * {
   line-height: 1.42;
 }
+.ql-editor.ql-blank::before {
+  left: 45px;
+  right: 45px;
+}
 
 /* FilePond */
 .filepond--root {
