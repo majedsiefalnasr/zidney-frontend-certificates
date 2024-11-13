@@ -4,11 +4,13 @@ import { getPondJSONData, setImageToFilePond } from './utilities.js';
  * Applies a certificate template from a JSON file by setting
  * configuration values for various elements and triggering necessary events.
  */
-async function certificateTemplate() {
+async function certificateTemplate(data) {
   const templateInput = document.getElementById(
     'generator_certificateTemplate'
   );
-  const jsonData = await getPondJSONData(FilePond.find(templateInput));
+
+  const jsonData =
+    data || (await getPondJSONData(FilePond.find(templateInput)));
 
   const changeEvent = new Event('change'); // Custom event for change triggers
 

@@ -3,13 +3,19 @@ import { certificateForm } from './certificateForm.js';
 import { certificateFromForm } from './certificateFromForm.js';
 import { exportCertificate } from './exportCertificate.js';
 import { certificateTemplate } from './certificateTemplate.js';
+import { getJSONData } from './utilities.js';
 
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', async (event) => {
   // Quill Rich Text Editor initialization
   initializeQuillEditor();
 
   // Initialize the certificate form
   certificateForm();
+
+  const defaultData = await getJSONData('./data/default_certificate.json');
+
+  // Initialize the certificate default settings and data
+  certificateTemplate(defaultData);
 
   // Apply template action button
   document

@@ -432,6 +432,34 @@ function getPondJSONData(pondInstance) {
   });
 }
 
+/**
+ * Fetches JSON data from a specified file URL.
+ *
+ * @param {string} fileUrl - The URL of the JSON file.
+ * @returns {Promise<Object>} A promise that resolves to the JSON data as an object.
+ * @throws {Error} If fetching or parsing the JSON data fails.
+ *
+ * @example
+ * getJSONData('path/to/your/file.json')
+ *   .then(data => console.log(data))
+ *   .catch(error => console.error('Error loading JSON:', error));
+ */
+async function getJSONData(fileUrl) {
+  try {
+    const response = await fetch(fileUrl);
+
+    if (!response.ok) {
+      throw new Error(`Failed to load JSON file: ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching JSON data:', error);
+    throw error;
+  }
+}
+
 export {
   getHexWithOpacity,
   debounce,
@@ -444,4 +472,5 @@ export {
   getDataFromJson,
   validateFileInput,
   getPondJSONData,
+  getJSONData,
 };
