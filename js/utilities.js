@@ -134,6 +134,56 @@ function getImageData(inputFile, type) {
 }
 
 /**
+ * Converts an image file from a FilePond instance to either a base64 string or a URL based on the specified type.
+ *
+ * @param {FilePond} pondInstance - The FilePond instance containing the uploaded file.
+ * @param {string} type - The desired output type: 'base64' for a base64 string, or 'URL' for a file URL.
+ * @returns {Promise<string>} A promise that resolves to either a base64 string or a file URL of the image.
+ * @throws {string} An error message if no file is available in the FilePond instance or if an invalid type is specified.
+ *
+ * @example
+ * // Usage example: Convert an image file to base64
+ * getImageData(pondInstance, 'base64')
+ *   .then(data => console.log("Base64 Data:", data))
+ *   .catch(error => console.error(error));
+ *
+ * // Usage example: Convert an image file to a URL
+ * getImageData(pondInstance, 'URL')
+ *   .then(data => console.log("Image URL:", data))
+ *   .catch(error => console.error(error));
+ */
+function getFilePondImageData(pondInstance, type) {
+  return new Promise((resolve, reject) => {
+    // Ensure there's at least one file in the FilePond instance
+    const fileItem = pondInstance.getFiles()[0];
+    if (!fileItem) {
+      reject('No file available in FilePond instance');
+      return;
+    }
+
+    const file = fileItem.file;
+
+    if (type === 'base64') {
+      // Convert the image file to a base64 string
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        resolve(e.target.result); // Return base64 string
+      };
+      reader.onerror = function () {
+        reject('Error reading file');
+      };
+      reader.readAsDataURL(file); // Read file as base64
+    } else if (type === 'URL') {
+      // Create a URL for the image file
+      const fileURL = URL.createObjectURL(file);
+      resolve(fileURL); // Return URL
+    } else {
+      reject('Invalid type, choose "base64" or "URL"');
+    }
+  });
+}
+
+/**
  * Renders HTML content from a target element onto a canvas.
  *
  * @param {HTMLElement} target - The HTML element to be rendered onto the canvas.
@@ -153,7 +203,7 @@ async function renderToCanvas(target, canvas) {
   canvas.style.display = 'none';
 
   // Set the scale factor
-  const scale = 2;
+  const scale = 4;
 
   // Adjust width and height based on scale
   const width = target.offsetWidth * scale;
@@ -256,12 +306,45 @@ async function getDataFromJson(filePath) {
   }
 }
 
+/**
+ * Validates a FilePond file input to ensure at least one file is selected.
+ * If no files are present, it sets a custom error message, changes the status to 'error',
+ * and brings the FilePond input into focus to alert the user.
+ *
+ * @param {FilePond} pond - The FilePond instance representing the file input.
+ * @returns {boolean} Returns true if files are present; false if the input is empty.
+ *
+ * @example
+ * // Usage example when validating before form submission
+ * const isValid = validateFileInput(filePondInstance);
+ * if (!isValid) {
+ *   alert("Please add at least one file before submitting the form.");
+ * }
+ */
+function validateFileInput(pond) {
+  if (pond.getFiles().length === 0) {
+    // Set error
+    pond.element.classList.add('filepond--error');
+
+    // Focus on the FilePond input and scroll it into view
+    pond.element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    pond.element.focus();
+    return false; // Validation failed
+  }
+
+  // Remove error
+  pond.element.classList.remove('filepond--error');
+  return true; // Validation passed
+}
+
 export {
   getHexWithOpacity,
   debounce,
   downloadFile,
   getImageData,
+  getFilePondImageData,
   renderToCanvas,
   applyReplacements,
   getDataFromJson,
+  validateFileInput,
 };

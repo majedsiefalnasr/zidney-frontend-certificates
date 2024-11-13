@@ -1,5 +1,5 @@
-import { getImageData, getHexWithOpacity } from './utilities.js';
-import { renderToCanvas } from './utilities.js';
+import { getFilePondImageData, getHexWithOpacity } from './utilities.js';
+import { renderToCanvas, validateFileInput } from './utilities.js';
 
 /**
  * Generates a certificate based on form input settings and applies them to the certificate container.
@@ -24,6 +24,7 @@ async function certificateFromForm(certificateContainer, canvas) {
   clearBackgroundImage(certificateContainer);
   clearCertificateContent();
 
+  // Fetch and apply certificate type, language, orientation, and theme settings
   setCertificateType(certificateContainer);
   setCertificateLanguage();
   setOrientation(certificateContainer);
@@ -86,14 +87,8 @@ function formValidate() {
   ) {
     const sideImageInput = document.getElementById('generator_sideImage');
 
-    // Ensure a file is selected in the side image input
-    if (!sideImageInput.files.length) {
-      sideImageInput.classList.add('is-invalid'); // Highlight as invalid
-      sideImageInput.focus();
-      return false; // Validation failed
-    } else {
-      sideImageInput.classList.remove('is-invalid'); // Clear invalid style
-    }
+    // Validate Input
+    return validateFileInput(FilePond.find(sideImageInput));
   }
 
   // Validate background image if theme requires it
@@ -102,14 +97,8 @@ function formValidate() {
       'generator_backgroundImage'
     );
 
-    // Ensure a file is selected in the background image input
-    if (!backgroundImageInput.files.length) {
-      backgroundImageInput.classList.add('is-invalid'); // Highlight as invalid
-      backgroundImageInput.focus();
-      return false; // Validation failed
-    } else {
-      backgroundImageInput.classList.remove('is-invalid'); // Clear invalid style
-    }
+    // Validate Input
+    return validateFileInput(FilePond.find(backgroundImageInput));
   }
 
   return true; // Validation passed
@@ -264,8 +253,12 @@ function clearBorderColor(certificateContainer) {
  */
 async function setSideImage(certificateContainer) {
   const sideImageInput = document.getElementById('generator_sideImage');
+
   try {
-    const imageUrl = await getImageData(sideImageInput, 'URL');
+    const imageUrl = await getFilePondImageData(
+      FilePond.find(sideImageInput),
+      'URL'
+    );
     const image = document.createElement('img');
     image.src = imageUrl;
     certificateContainer.querySelector('.content >.side').appendChild(image);
@@ -274,7 +267,10 @@ async function setSideImage(certificateContainer) {
   }
 
   try {
-    const imageBase64 = await getImageData(sideImageInput, 'base64');
+    const imageBase64 = await getFilePondImageData(
+      FilePond.find(sideImageInput),
+      'base64'
+    );
     sessionStorage.setItem('certificateSideImage', imageBase64);
   } catch (error) {
     sessionStorage.setItem('certificateSideImage', '');
@@ -340,7 +336,10 @@ async function setBackgroundImage(certificateContainer) {
     'generator_backgroundImage'
   );
   try {
-    const imageUrl = await getImageData(backgroundImageInput, 'URL');
+    const imageUrl = await getFilePondImageData(
+      FilePond.find(backgroundImageInput),
+      'URL'
+    );
     certificateContainer.style.setProperty(
       '--background-image',
       `url(${imageUrl})`
@@ -350,7 +349,10 @@ async function setBackgroundImage(certificateContainer) {
   }
 
   try {
-    const imageBase64 = await getImageData(backgroundImageInput, 'base64');
+    const imageBase64 = await getFilePondImageData(
+      FilePond.find(backgroundImageInput),
+      'base64'
+    );
     sessionStorage.setItem('certificateBackgroundImage', imageBase64);
   } catch (error) {
     sessionStorage.setItem('certificateBackgroundImage', '');

@@ -31,6 +31,18 @@
       crossorigin="anonymous"
     />
 
+    <!-- filepond -->
+    <link
+      href="https://unpkg.com/filepond@^4/dist/filepond.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+
     <!-- Generator style -->
     <link rel="stylesheet" href="./css/style.css" />
   </head>
@@ -150,19 +162,12 @@
                 <label for="generator_sideImage" class="form-label"
                   >Side Image</label
                 >
-                <div id="generator_sideImagePreview">
-                  <button
-                    type="button"
-                    class="btn-close"
-                    aria-label="Clear"
-                  ></button>
-                  <img />
-                </div>
                 <input
                   class="form-control"
                   type="file"
                   id="generator_sideImage"
                   accept="image/*"
+                  data-max-file-size="2MB"
                 />
                 <div class="invalid-feedback">
                   Please add a Side Image to proceed with generating the
@@ -176,19 +181,12 @@
               <label for="generator_backgroundImage" class="form-label"
                 >Background Image</label
               >
-              <div id="generator_backgroundImagePreview">
-                <button
-                  type="button"
-                  class="btn-close"
-                  aria-label="Clear"
-                ></button>
-                <img />
-              </div>
               <input
                 class="form-control"
                 type="file"
                 id="generator_backgroundImage"
                 accept="image/*"
+                data-max-file-size="3MB"
               />
               <div class="invalid-feedback">
                 Please add a Background Image to proceed with generating the
@@ -329,6 +327,24 @@
     ></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- filepond -->
+    <script
+      src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://unpkg.com/filepond/dist/filepond.js"
       crossorigin="anonymous"
     ></script>
 
