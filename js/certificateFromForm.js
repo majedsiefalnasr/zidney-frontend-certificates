@@ -305,11 +305,11 @@ function clearSideImage(certificateContainer) {
  */
 function setSideImagePosition(certificateContainer) {
   const position = document.getElementById('generator_sideImagePosition').value;
-  certificateContainer.style.setProperty('--side-position', position);
-  sessionStorage.setItem(
-    'certificateSideImagePosition',
-    position === '0' ? 'left' : 'right'
+  certificateContainer.style.setProperty(
+    '--side-position',
+    position === 'left' ? '0' : '1'
   );
+  sessionStorage.setItem('certificateSideImagePosition', position);
 }
 
 /**

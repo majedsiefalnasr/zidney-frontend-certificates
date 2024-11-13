@@ -184,6 +184,54 @@ function getFilePondImageData(pondInstance, type) {
 }
 
 /**
+ * Sets a base64 image string into a FilePond instance as an image file.
+ *
+ * @param {FilePond} pondInstance - The FilePond instance where the image will be set.
+ * @param {string} base64Data - The base64 string of the image to be set.
+ * @param {string} [fileName='image.png'] - Optional file name to give the image in FilePond (default is 'image.png').
+ * @returns {Promise<void>} A promise that resolves when the image is successfully added to the FilePond instance.
+ * @throws {string} An error message if the base64 string is invalid or cannot be processed.
+ *
+ * @example
+ * // Usage example: Set a base64 image into FilePond
+ * setImageToFilePond(pondInstance, base64Data)
+ *   .then(() => console.log("Image set successfully"))
+ *   .catch(error => console.error(error));
+ */
+function setImageToFilePond(pondInstance, base64Data, fileName = 'image.png') {
+  return new Promise((resolve, reject) => {
+    // Verify that base64Data is a valid string
+    if (
+      typeof base64Data !== 'string' ||
+      !base64Data.startsWith('data:image')
+    ) {
+      reject('Invalid base64 image data');
+      return;
+    }
+
+    // Convert the base64 data to a Blob
+    const byteString = atob(base64Data.split(',')[1]); // Decode base64 string
+    const mimeType = base64Data.match(/^data:(.*?);base64/)[1]; // Extract MIME type
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([ab], { type: mimeType });
+
+    // Add the Blob as a file to the FilePond instance
+    pondInstance
+      .addFile(new File([blob], fileName, { type: mimeType }))
+      .then(() => resolve())
+      .catch((error) =>
+        reject('Error setting image in FilePond: ' + error.message)
+      );
+  });
+}
+
+/**
  * Renders HTML content from a target element onto a canvas.
  *
  * @param {HTMLElement} target - The HTML element to be rendered onto the canvas.
@@ -337,14 +385,63 @@ function validateFileInput(pond) {
   return true; // Validation passed
 }
 
+/**
+ * Converts a JSON file from a FilePond instance and returns the parsed JSON.
+ *
+ * @param {FilePond} pondInstance - The FilePond instance containing the uploaded file.
+ * @returns {Promise<Object>} A promise that resolves to the parsed JSON data from the file.
+ * @throws {string} An error message if no file is available in the FilePond instance or if the file is not a JSON file.
+ *
+ * @example
+ * // Usage example: Parse JSON file from FilePond instance
+ * getJSONData(pondInstance)
+ *   .then(data => console.log("Parsed JSON Data:", data))
+ *   .catch(error => console.error(error));
+ */
+function getPondJSONData(pondInstance) {
+  return new Promise((resolve, reject) => {
+    // Ensure there's at least one file in the FilePond instance
+    const fileItem = pondInstance.getFiles()[0];
+    if (!fileItem) {
+      reject('No file available in FilePond instance');
+      return;
+    }
+
+    const file = fileItem.file;
+
+    // Ensure the file is a JSON file
+    if (file.type !== 'application/json') {
+      reject('The file is not a JSON file');
+      return;
+    }
+
+    // Create a FileReader to read the JSON file
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      try {
+        const jsonData = JSON.parse(e.target.result); // Parse the JSON data
+        resolve(jsonData); // Return parsed JSON data
+      } catch (error) {
+        reject('Error parsing JSON file');
+      }
+    };
+    reader.onerror = function () {
+      reject('Error reading file');
+    };
+    reader.readAsText(file); // Read the file as text (JSON)
+  });
+}
+
 export {
   getHexWithOpacity,
   debounce,
   downloadFile,
   getImageData,
   getFilePondImageData,
+  setImageToFilePond,
   renderToCanvas,
   applyReplacements,
   getDataFromJson,
   validateFileInput,
+  getPondJSONData,
 };

@@ -2,6 +2,7 @@ import { initializeQuillEditor } from './QuillRichTextEditor.js';
 import { certificateForm } from './certificateForm.js';
 import { certificateFromForm } from './certificateFromForm.js';
 import { exportCertificate } from './exportCertificate.js';
+import { certificateTemplate } from './certificateTemplate.js';
 
 document.addEventListener('DOMContentLoaded', (event) => {
   // Quill Rich Text Editor initialization
@@ -9,6 +10,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
   // Initialize the certificate form
   certificateForm();
+
+  // Apply template action button
+  document
+    .getElementById('applyCertificateTemplate')
+    .addEventListener('click', async () => {
+      certificateTemplate();
+    });
 
   // Generate certificate preview action button
   document

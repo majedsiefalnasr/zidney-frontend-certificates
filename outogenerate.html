@@ -58,6 +58,25 @@
           <!-- Form -->
           <h2 class="fs-5 mb-3">Settings</h2>
 
+          <!-- Template -->
+          <div class="mb-3">
+            <label for="generator_certificateTemplate" class="form-label"
+              >Template (JSON)</label
+            >
+            <input
+              class="form-control"
+              type="file"
+              id="generator_certificateTemplate"
+              accept="application/json"
+            />
+          </div>
+          <!-- Certificate Preview -->
+          <button class="btn btn-light w-100" id="applyCertificateTemplate">
+            Apply Template
+          </button>
+
+          <hr class="hr" />
+
           <!-- Type -->
           <div class="mb-3">
             <label for="generator_type" class="form-label">Type</label>
@@ -153,8 +172,8 @@
                   aria-label="Theme"
                   id="generator_sideImagePosition"
                 >
-                  <option value="0" selected>Left</option>
-                  <option value="1">Right</option>
+                  <option value="left" selected>Left</option>
+                  <option value="right">Right</option>
                 </select>
               </div>
 

@@ -15,20 +15,30 @@ function certificateForm() {
     FilePondPluginFileValidateSize
   );
 
-  // Check selected side image
+  // Create a FilePond input for template data
+  const templateInput = document.getElementById(
+    'generator_certificateTemplate'
+  );
+  // Create a FilePond instance
+  FilePond.create(templateInput, {
+    // Only accept images
+    acceptedFileTypes: ['application/json'],
+  });
+
+  // Create a FilePond input for side image
   const sideImageInput = document.getElementById('generator_sideImage');
   // Create a FilePond instance
-  const sideImageInputPond = FilePond.create(sideImageInput, {
+  FilePond.create(sideImageInput, {
     // Only accept images
     acceptedFileTypes: ['image/*'],
   });
 
-  // Check selected side image
+  // Create a FilePond input for background image
   const backgroundImageInput = document.getElementById(
     'generator_backgroundImage'
   );
   // Create a FilePond instance
-  const backgroundImageInputPond = FilePond.create(backgroundImageInput, {
+  FilePond.create(backgroundImageInput, {
     // Only accept images
     acceptedFileTypes: ['image/*'],
   });
