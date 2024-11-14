@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
   document
     .getElementById('applyCertificateTemplate')
     .addEventListener('click', async () => {
-      certificateTemplate();
+      await certificateTemplate();
     });
 
   // Generate certificate preview action button
