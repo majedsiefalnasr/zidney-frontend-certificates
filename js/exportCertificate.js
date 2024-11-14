@@ -1,22 +1,15 @@
-import { certificateFromForm } from './certificateFromForm.js';
-
 /**
  * Exports the certificate data in the specified format, prompting a "Save As" dialog.
  *
- * @param {HTMLElement} certificateContainer - The certificate container element to update.
  * @param {HTMLCanvasElement} canvasOutput - The canvas element to render as PDF or image.
  * @param {string} format - The desired file format ('pdf', 'png', 'jpeg', or 'json').
  * @param {string} [defaultFilename="certificate"] - The default file name.
  */
 async function exportCertificate(
-  certificateContainer,
   canvasOutput,
   format = 'pdf',
   defaultFilename = 'certificate'
 ) {
-  // Update certificate data from the form
-  // await certificateFromForm(certificateContainer, canvasOutput);
-
   try {
     let fileHandle;
     let fileData;
