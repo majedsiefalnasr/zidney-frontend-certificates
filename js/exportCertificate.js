@@ -1,5 +1,3 @@
-import { certificateFromForm } from './certificateFromForm.js';
-
 /**
  * Exports the certificate data in the specified format, prompting a "Save As" dialog.
  *
@@ -14,9 +12,6 @@ async function exportCertificate(
   format = 'pdf',
   defaultFilename = 'certificate'
 ) {
-  // Update certificate data from the form
-  // await certificateFromForm(certificateContainer, canvasOutput);
-
   try {
     let fileHandle;
     let fileData;
