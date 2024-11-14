@@ -15,12 +15,10 @@ function getHexWithOpacity(hexColor, opacityPercentage) {
   const cleanHex = hexColor.replace('#', '');
 
   // Calculate the alpha value from opacity percentage and convert it to hex
-  let alpha = Math.round((opacityPercentage / 100) * 255).toString(16);
-
   // Ensure alpha is two characters (e.g., '0A' instead of 'A')
-  if (alpha.length === 1) {
-    alpha = '0' + alpha;
-  }
+  const alpha = Math.round((opacityPercentage / 100) * 255)
+    .toString(16)
+    .padStart(2, '0');
 
   // Return the hex color with the alpha channel
   return `#${cleanHex}${alpha}`;
