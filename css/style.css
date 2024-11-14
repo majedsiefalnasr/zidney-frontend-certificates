@@ -243,12 +243,8 @@
 /* Certificate styles */
 /* With background */
 #certificate[data-theme='withBackgroundImage'] {
-  /* --background-image: url(../img/background/landscape/ex-1.png); */
   background-image: var(--background-image);
   background-size: cover;
-}
-#certificate[data-theme='withBackgroundImage'][data-orientation='portrait'] {
-  /* --background-image: url(../img/background/portrait/ex-1.png); */
 }
 
 /* With border */

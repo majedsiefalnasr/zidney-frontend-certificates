@@ -460,6 +460,62 @@ async function getJSONData(fileUrl) {
   }
 }
 
+/**
+ * Recursively replaces shortcodes in a JSON object with values from the replacements object.
+ *
+ * @param {Object} JSONData - The JSON object to process.
+ * @param {Object} replacements - An object where the keys are shortcodes and the values are
+ *                                 the replacements for those shortcodes.
+ * @returns {Object} The updated JSON object with shortcodes replaced by their corresponding values.
+ */
+function replaceShortcodesInJSON(JSONData, replacements) {
+  // Helper function to replace shortcodes in a string
+  const replaceShortcodesInString = (str) =>
+    str.replace(/\[([^\]]+)\]/g, (match, key) => replacements[key] || match);
+
+  // Recursively iterate through the JSON object
+  const updatedData = JSON.parse(JSON.stringify(JSONData)); // Deep copy of JSONData
+  for (const key in updatedData) {
+    if (updatedData.hasOwnProperty(key)) {
+      const value = updatedData[key];
+      // If value is a string, replace shortcodes
+      if (typeof value === 'string') {
+        updatedData[key] = replaceShortcodesInString(value);
+      }
+      // If value is an object, recurse into it
+      else if (typeof value === 'object') {
+        updatedData[key] = replaceShortcodesInJSON(value, replacements);
+      }
+    }
+  }
+
+  return updatedData;
+}
+
+/**
+ * Converts a base64 image string to a URL.
+ * @param {string} base64Data - The base64 encoded image data.
+ * @returns {string} The image URL.
+ */
+function createImageURLFromBase64(base64Data) {
+  // Convert the base64 string into a Blob
+  const byteCharacters = atob(base64Data.split(',')[1]); // Decode the base64 string (skip the prefix)
+  const byteArrays = [];
+
+  for (let offset = 0; offset < byteCharacters.length; offset++) {
+    const byte = byteCharacters.charCodeAt(offset);
+    byteArrays.push(byte);
+  }
+
+  // Create a Blob from the byte array
+  const blob = new Blob([new Uint8Array(byteArrays)], { type: 'image/png' });
+
+  // Generate a URL for the Blob
+  const imageURL = URL.createObjectURL(blob);
+
+  return imageURL;
+}
+
 export {
   getHexWithOpacity,
   debounce,
@@ -473,4 +529,6 @@ export {
   validateFileInput,
   getPondJSONData,
   getJSONData,
+  replaceShortcodesInJSON,
+  createImageURLFromBase64,
 };

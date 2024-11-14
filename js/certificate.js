@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
   // Initialize the certificate form
   certificateForm();
 
-  const defaultData = await getJSONData('./data/default_certificate.json');
+  const defaultData = await getJSONData('./data/certificate_default.json');
 
   // Initialize the certificate default settings and data
   defaultData && certificateTemplate(defaultData);
