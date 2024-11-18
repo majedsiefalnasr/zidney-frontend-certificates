@@ -1,0 +1,310 @@
+// Variables
+$ql-font-lato: 'Lato', sans-serif;
+$ql-font-alexandria: 'alexandria', sans-serif;
+
+$ql-line-height: 1.42;
+$ql-padding: 40px;
+
+$error-color: #dc3545;
+$preview-bg-color: #f6f6f6;
+$preview-border-color: #dbdbdb;
+
+$certificate-font: Helvetica, Arial, sans-serif;
+
+$damnation-x: 1180px;
+$damnation-y: 910px;
+$padding-x: 200px;
+$padding-y: 100px;
+
+// Mixins
+@mixin ql-header-content($value, $content) {
+  .ql-picker-label[data-value='#{$value}']::before,
+  .ql-picker-item[data-value='#{$value}']::before {
+    content: $content;
+  }
+}
+
+@mixin font-content($value, $content) {
+  .ql-picker-label[data-value='#{$value}']::before,
+  .ql-picker-item[data-value='#{$value}']::before {
+    content: $content;
+  }
+}
+
+@mixin font-value($value) {
+  .ql-font-#{$value} {
+    font-family: #{$value}, sans-serif;
+  }
+}
+
+@mixin weight-content($value) {
+  .ql-picker-label[data-value='#{$value}']::before,
+  .ql-picker-item[data-value='#{$value}']::before {
+    content: '#{$value}';
+  }
+}
+
+@mixin weight-value($value) {
+  .ql-weight-#{$value} {
+    font-weight: #{$value};
+  }
+}
+
+// Styles
+.ql-snow {
+  @include font-value(lato);
+  @include font-value(alexandria);
+
+  @include weight-value(100);
+  @include weight-value(200);
+  @include weight-value(300);
+  @include weight-value(400);
+  @include weight-value(500);
+  @include weight-value(600);
+  @include weight-value(700);
+  @include weight-value(800);
+  @include weight-value(900);
+
+  .ql-picker {
+    &.ql-header {
+      @include ql-header-content(1, 'Heading');
+      @include ql-header-content(2, 'Subheading');
+    }
+
+    &.ql-font {
+      @include font-content('lato', 'Lato');
+      @include font-content('alexandria', 'Alexandria');
+    }
+
+    &.ql-weight {
+      width: 60px;
+
+      @include weight-content(100);
+      @include weight-content(200);
+      @include weight-content(300);
+      @include weight-content(400);
+      @include weight-content(500);
+      @include weight-content(600);
+      @include weight-content(700);
+      @include weight-content(800);
+      @include weight-content(900);
+    }
+  }
+}
+
+.ql-editor {
+  min-height: 160px;
+  padding: $ql-padding;
+  line-height: $ql-line-height;
+
+  &.ql-blank::before {
+    left: 45px;
+    right: 45px;
+  }
+}
+
+// FilePond
+.filepond--root {
+  overflow: hidden;
+
+  &.filepond--error {
+    border: 1px solid $error-color;
+
+    .filepond--drip {
+      background: rgba($error-color, 0.5);
+    }
+
+    .filepond--drop-label label,
+    .filepond--label-action {
+      color: $error-color;
+      text-decoration-color: $error-color;
+    }
+  }
+}
+
+// Certificate Settings
+#customThemeSettings {
+  &[data-theme] {
+    > * {
+      display: none;
+    }
+  }
+
+  &[data-theme='borderWithSideImage'] #withSideImage,
+  &[data-theme='withSideImage'] #withSideImage,
+  &[data-theme='withBackgroundImage'] #withBackgroundImage,
+  &[data-theme*='border'] #withBorderColor,
+  &:not([data-theme='withBackgroundImage']) #withBackgroundColor {
+    display: block;
+  }
+}
+
+// Certificate content
+.certificate-preview {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  background-color: #f6f6f6;
+  border: solid #dbdbdb;
+  border-width: 1px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#canvasPreview {
+  width: 100%;
+}
+
+#certificate {
+  /* Hide container until certificate is generated */
+  display: none;
+
+  /* Ensure scaling center */
+  transform-origin: center;
+
+  width: $damnation-x;
+  height: $damnation-y;
+  padding-inline: $padding-x;
+  padding-block: $padding-y;
+
+  /* Fix flex view or preview container */
+  flex-shrink: 0;
+
+  /* Make sure it is like Quilljs editor */
+  font-family: Helvetica, Arial, sans-serif;
+  /* Scaling with font size */
+  font-size: 16px;
+
+  background-color: var(--background-color, #ffffff);
+
+  > .content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+
+    > .data-form {
+      margin-block: auto;
+      padding: 0px;
+      width: 100%;
+
+      /* Required for Quilljs editor */
+      height: unset;
+    }
+
+    > .side {
+      display: none;
+    }
+  }
+
+  // Certificate styles
+  // With background
+  &[data-theme='withBackgroundImage'] {
+    background-image: var(--background-image);
+    background-size: cover;
+  }
+
+  // With border
+  &[data-theme*='border'] {
+    position: relative;
+    padding: 50px;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      box-sizing: border-box;
+    }
+
+    &::before {
+      top: 20px;
+      left: 20px;
+      width: calc(100% - 40px);
+      height: calc(100% - 40px);
+      border: 3px solid var(--border-accent-color, #b1b1b1be);
+    }
+
+    &::after {
+      top: 28px;
+      left: 28px;
+      width: calc(100% - 56px);
+      height: calc(100% - 56px);
+      border: 15px solid var(--border-color, #b1b1b1be);
+    }
+
+    > .content {
+      position: relative;
+      border: 6px solid var(--border-accent-color, #b1b1b1be);
+      z-index: 1;
+
+      > .data-form {
+        padding: 60px;
+      }
+    }
+  }
+
+  // Without border
+  &:not([data-theme*='border']) {
+    // With side image
+    &[data-theme*='ithSideImage'] {
+      padding: 40px;
+
+      > .content {
+        gap: 80px;
+
+        > .side {
+          margin: -40px;
+        }
+      }
+    }
+  }
+
+  // With side image
+  &[data-theme*='ithSideImage'] {
+    > .content {
+      > .data-form {
+        max-width: 65%;
+      }
+
+      > .side {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex: 1 0 auto;
+        max-width: 35%;
+        overflow: clip;
+
+        /* Image position */
+        order: var(--side-position, 0);
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  &[data-orientation='portrait'] {
+    width: $damnation-y;
+    height: $damnation-x;
+    padding-inline: $padding-y;
+    padding-block: $padding-x;
+
+    &[data-theme*='ithSideImage'] {
+      > .content {
+        > .data-form {
+          max-width: unset;
+          max-height: 75%;
+        }
+
+        > .side {
+          max-width: unset;
+          max-height: 25%;
+        }
+      }
+    }
+  }
+}
