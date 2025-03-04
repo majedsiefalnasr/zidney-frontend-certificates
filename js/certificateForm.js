@@ -90,7 +90,6 @@ function setupExportButtons() {
       .querySelector(`#certificateExport [export-type="${format}"]`)
       .addEventListener('click', async () => {
         await exportCertificate(
-          document.getElementById('certificate'),
           document.getElementById('canvasPreview'),
           format.toLowerCase()
         );
