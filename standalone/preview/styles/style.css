@@ -1,0 +1,237 @@
+.ql-snow .ql-font-lato {
+  font-family: lato, sans-serif;
+}
+.ql-snow .ql-font-alexandria {
+  font-family: alexandria, sans-serif;
+}
+.ql-snow .ql-weight-100 {
+  font-weight: 100;
+}
+.ql-snow .ql-weight-200 {
+  font-weight: 200;
+}
+.ql-snow .ql-weight-300 {
+  font-weight: 300;
+}
+.ql-snow .ql-weight-400 {
+  font-weight: 400;
+}
+.ql-snow .ql-weight-500 {
+  font-weight: 500;
+}
+.ql-snow .ql-weight-600 {
+  font-weight: 600;
+}
+.ql-snow .ql-weight-700 {
+  font-weight: 700;
+}
+.ql-snow .ql-weight-800 {
+  font-weight: 800;
+}
+.ql-snow .ql-weight-900 {
+  font-weight: 900;
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value='1']::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value='1']::before {
+  content: 'Heading';
+}
+.ql-snow .ql-picker.ql-header .ql-picker-label[data-value='2']::before,
+.ql-snow .ql-picker.ql-header .ql-picker-item[data-value='2']::before {
+  content: 'Subheading';
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value='lato']::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value='lato']::before {
+  content: 'Lato';
+}
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value='alexandria']::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value='alexandria']::before {
+  content: 'Alexandria';
+}
+.ql-snow .ql-picker.ql-weight {
+  width: 60px;
+}
+.ql-snow .ql-picker.ql-weight .ql-picker-label[data-value='100']::before,
+.ql-snow .ql-picker.ql-weight .ql-picker-item[data-value='100']::before {
+  content: '100';
+}
+.ql-snow .ql-picker.ql-weight .ql-picker-label[data-value='200']::before,
+.ql-snow .ql-picker.ql-weight .ql-picker-item[data-value='200']::before {
+  content: '200';
+}
+.ql-snow .ql-picker.ql-weight .ql-picker-label[data-value='300']::before,
+.ql-snow .ql-picker.ql-weight .ql-picker-item[data-value='300']::before {
+  content: '300';
+}
+.ql-snow .ql-picker.ql-weight .ql-picker-label[data-value='400']::before,
+.ql-snow .ql-picker.ql-weight .ql-picker-item[data-value='400']::before {
+  content: '400';
+}
+.ql-snow .ql-picker.ql-weight .ql-picker-label[data-value='500']::before,
+.ql-snow .ql-picker.ql-weight .ql-picker-item[data-value='500']::before {
+  content: '500';
+}
+.ql-snow .ql-picker.ql-weight .ql-picker-label[data-value='600']::before,
+.ql-snow .ql-picker.ql-weight .ql-picker-item[data-value='600']::before {
+  content: '600';
+}
+.ql-snow .ql-picker.ql-weight .ql-picker-label[data-value='700']::before,
+.ql-snow .ql-picker.ql-weight .ql-picker-item[data-value='700']::before {
+  content: '700';
+}
+.ql-snow .ql-picker.ql-weight .ql-picker-label[data-value='800']::before,
+.ql-snow .ql-picker.ql-weight .ql-picker-item[data-value='800']::before {
+  content: '800';
+}
+.ql-snow .ql-picker.ql-weight .ql-picker-label[data-value='900']::before,
+.ql-snow .ql-picker.ql-weight .ql-picker-item[data-value='900']::before {
+  content: '900';
+}
+.ql-editor {
+  min-height: 160px;
+  padding: 40px;
+  line-height: 1.42;
+}
+.ql-editor.ql-blank::before {
+  left: 45px;
+  right: 45px;
+}
+.d-none {
+  display: none;
+}
+#customThemeSettings[data-theme] > * {
+  display: none;
+}
+#customThemeSettings[data-theme='borderWithSideImage'] #withSideImage,
+#customThemeSettings[data-theme='withSideImage'] #withSideImage,
+#customThemeSettings[data-theme='withBackgroundImage'] #withBackgroundImage,
+#customThemeSettings[data-theme*='border'] #withBorderColor,
+#customThemeSettings:not([data-theme='withBackgroundImage'])
+  #withBackgroundColor {
+  display: block;
+}
+.certificate-preview {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
+  background-color: #f6f6f6;
+  border: solid #dbdbdb;
+  border-width: 1px;
+  border-radius: 20px;
+  overflow: hidden;
+}
+#canvasPreview {
+  width: 100%;
+}
+#certificate {
+  display: none;
+  transform-origin: center;
+  width: 1180px;
+  height: 910px;
+  padding-inline: 200px;
+  padding-block: 100px;
+  flex-shrink: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  background-color: var(--background-color, #ffffff);
+}
+#certificate > .content {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+#certificate > .content > .data-form {
+  margin-block: auto;
+  padding: 0px;
+  width: 100%;
+  height: unset;
+}
+#certificate > .content > .side {
+  display: none;
+}
+#certificate[data-theme='withBackgroundImage'] {
+  background-image: var(--background-image);
+  background-size: cover;
+}
+#certificate[data-theme*='border'] {
+  position: relative;
+  padding: 50px;
+}
+#certificate[data-theme*='border']::before,
+#certificate[data-theme*='border']::after {
+  content: '';
+  position: absolute;
+  box-sizing: border-box;
+}
+#certificate[data-theme*='border']::before {
+  top: 20px;
+  left: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  border: 3px solid
+    var(--border-accent-color, rgba(177, 177, 177, 0.7450980392));
+}
+#certificate[data-theme*='border']::after {
+  top: 28px;
+  left: 28px;
+  width: calc(100% - 56px);
+  height: calc(100% - 56px);
+  border: 15px solid var(--border-color, rgba(177, 177, 177, 0.7450980392));
+}
+#certificate[data-theme*='border'] > .content {
+  position: relative;
+  border: 6px solid
+    var(--border-accent-color, rgba(177, 177, 177, 0.7450980392));
+  z-index: 1;
+}
+#certificate[data-theme*='border'] > .content > .data-form {
+  padding: 60px;
+}
+#certificate:not([data-theme*='border'])[data-theme*='ithSideImage'] {
+  padding: 40px;
+}
+#certificate:not([data-theme*='border'])[data-theme*='ithSideImage']
+  > .content {
+  gap: 80px;
+}
+#certificate:not([data-theme*='border'])[data-theme*='ithSideImage']
+  > .content
+  > .side {
+  margin: -40px;
+}
+#certificate[data-theme*='ithSideImage'] > .content > .data-form {
+  max-width: 65%;
+}
+#certificate[data-theme*='ithSideImage'] > .content > .side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1 0 auto;
+  max-width: 35%;
+  overflow: clip;
+  order: var(--side-position, 0);
+}
+#certificate[data-theme*='ithSideImage'] > .content > .side img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+#certificate[data-orientation='portrait'] {
+  width: 910px;
+  height: 1180px;
+  padding-inline: 100px;
+  padding-block: 200px;
+}
+#certificate[data-orientation='portrait'][data-theme*='ithSideImage']
+  > .content
+  > .data-form {
+  max-width: unset;
+  max-height: 75%;
+}
+#certificate[data-orientation='portrait'][data-theme*='ithSideImage']
+  > .content
+  > .side {
+  max-width: unset;
+  max-height: 25%;
+}
